@@ -11,6 +11,8 @@ from torch.utils.tensorboard import SummaryWriter
 from tensorboardX import SummaryWriter
 import datetime
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+model = MobileNet().to(device)
 
 def train_dataloader():
 
@@ -73,8 +75,8 @@ def main():
 
 
     img_grid = torchvision.utils.make_grid(images) #
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = MobileNet().to(device)
+    #device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    #model = MobileNet().to(device)
     CEE = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
@@ -85,7 +87,7 @@ def main():
     correct = 0
     total = 0
     model.train()
-    for j in range(200):
+    for j in range(30):
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
 
@@ -114,6 +116,8 @@ def main():
             print(f"{j+1} - {i+1} -  loss : {running_loss / 2000:.5f}  acc : {acc:.4f}")
             running_loss = 0.0
             writer.add_scalar("Loss/train", loss, i)
+            writer.add_scalar("Acc/train", acc, i )
+            writer.add_histogram('Distirbution', output + i, i)
 
 
 
