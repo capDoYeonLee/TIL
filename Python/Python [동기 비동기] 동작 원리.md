@@ -10,7 +10,7 @@ async def co_routine():
 	print("It is coroutine")
 ```
 
-<img src=”C:/Users/ghtyu/OneDrive/Desktop/TIL/Python/Untitled1.png”>
+<img src=”./Untitled.png”>
 
 e.g)
 
